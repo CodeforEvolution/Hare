@@ -6,6 +6,7 @@ add_executable(Hare Application.cpp
 					EditorView.cpp
 					EncoderListView.cpp
 					FileNamePatternView.cpp
+					RefRow.cpp
 					Settings.cpp
 					StatusBarFilter.cpp)
 
@@ -14,7 +15,7 @@ if (NOT TAGLIB)
 	message(FATAL_ERROR "libtag wasn't found. Please install it.")
 endif(NOT TAGLIB)
 
-target_link_libraries(Hare "santa" "aeencoder" "audioinfo" "tag" "be" "game" "media" "tracker")
+target_link_libraries(Hare "aeencoder" "audioinfo" "tag" "be" "game" "media" "tracker" "columnlistview")
 
 set_property(TARGET Hare PROPERTY RUNTIME_OUTPUT_DIRECTORY ${HARE_BUILD_DIR})
 

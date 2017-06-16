@@ -3,8 +3,6 @@
 
 #include <Archivable.h>
 
-#include <Santa/ColumnListView.h>
-
 #include "CommandConstants.h"
 
 class AEEncoder;
@@ -33,7 +31,7 @@ public:
 
 	int32* ColumnDisplayOrder();
 	void SetColumnDisplayOrder(const int32* value);
-
+/*
 	int32 NumberOfSortKeys();
 	void SetNumberOfSortKeys(int32 value);
 
@@ -42,7 +40,7 @@ public:
 
 	CLVSortMode* SortModes();
 	void SetSortModes(const CLVSortMode* value);
-
+*/
 	bool* ColumnsShown();
 	void SetColumnsShown(const bool* value);
 
@@ -58,9 +56,8 @@ private:
 	char encoderName[B_FILE_NAME_LENGTH];
 	char addonDirectory[B_PATH_NAME_LENGTH];
 	int32 columnDisplayOrder[NUM_OF_COLUMNS];
-	int32 numberOfSortKeys;
-	int32 sortKeys[NUM_OF_COLUMNS];
-	CLVSortMode sortModes[NUM_OF_COLUMNS];
+//	int32 numberOfSortKeys;
+//	int32 sortKeys[NUM_OF_COLUMNS];
 	bool columnsShown[NUM_OF_COLUMNS];
 	float columnWidths[NUM_OF_COLUMNS];
 

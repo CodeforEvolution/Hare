@@ -12,8 +12,7 @@
 #include <Roster.h>
 #include <String.h>
 
-#include <AEEncoder/AEEncoder.h>
-#include <Santa/ColumnListView.h>
+#include <AEEncoder.h>
 
 #include "AppDefs.h"
 #include "CommandConstants.h"
@@ -36,7 +35,7 @@ Settings::Settings()
 	for (int i = 0; i < NUM_OF_COLUMNS; i++) {
 		columnDisplayOrder[i] = i;
 	}
-
+/*
 	numberOfSortKeys = DEFAULT_NUMBER_OF_SORT_KEYS;
 
 	for (int i = 0; i < NUM_OF_COLUMNS; i++) {
@@ -46,7 +45,7 @@ Settings::Settings()
 	for (int i = 0; i < NUM_OF_COLUMNS; i++) {
 		sortModes[i] = NoSort;
 	}
-
+*/
 	for (int i = 0; i < NUM_OF_COLUMNS; i++) {
 		columnsShown[i] = true;
 	}
@@ -100,7 +99,7 @@ Settings::Settings(BMessage* archive)
 		}
 	}
 
-	status = archive->FindInt32("numberOfSortKeys", &numberOfSortKeys);
+/*	status = archive->FindInt32("numberOfSortKeys", &numberOfSortKeys);
 	if (status != B_OK) {
 		PRINT(("Error loading NUMBER_OF_SORT_KEYS\n"));
 		numberOfSortKeys = DEFAULT_NUMBER_OF_SORT_KEYS;
@@ -130,7 +129,7 @@ Settings::Settings(BMessage* archive)
 		for (int i = 0; i < NUM_OF_COLUMNS; i++) {
 			sortModes[i] = NoSort;
 		}
-	}
+	} */
 
 	for (int i = 0; i < NUM_OF_COLUMNS; i++) {
 		status = archive->FindBool("columnsShown", i,
@@ -214,7 +213,7 @@ Settings::Archive(BMessage* archive, bool deep) const
 		}
 	}
 
-	if (status == B_OK) {
+/*	if (status == B_OK) {
 		status = archive->AddInt32("numberOfSortKeys", numberOfSortKeys);
 	}
 
@@ -234,7 +233,7 @@ Settings::Archive(BMessage* archive, bool deep) const
 				break;
 			}
 		}
-	}
+	} */
 
 	if (status == B_OK) {
 		for (int i = 0; i < NUM_OF_COLUMNS; i++) {
@@ -372,7 +371,7 @@ Settings::SetColumnDisplayOrder(const int32* value)
 		}
 	}
 }
-
+/*
 int32
 Settings::NumberOfSortKeys()
 {
@@ -430,7 +429,7 @@ Settings::SetSortModes(const CLVSortMode* value)
 		}
 	}
 }
-
+*/
 bool*
 Settings::ColumnsShown()
 {
@@ -488,11 +487,11 @@ Settings::PrintToStream()
 	for (int i = 0; i < NUM_OF_COLUMNS; i++) {
 		PRINT(("\tCOLUMN_DISPLAY_ORDER[%d] = %d\n", i, columnDisplayOrder[i]));
 	}
-	PRINT(("\tNUMBER_OF_SORT_KEYS = %d\n", numberOfSortKeys));
+/*	PRINT(("\tNUMBER_OF_SORT_KEYS = %d\n", numberOfSortKeys));
 	for (int i = 0; i < NUM_OF_COLUMNS; i++) {
 		PRINT(("\tSORT_KEYS[%d] = %d\n", i, sortKeys[i]));
 	}
 	for (int i = 0; i < NUM_OF_COLUMNS; i++) {
 		PRINT(("\tSORT_MODES[%d] = %d\n", i, sortModes[i]));
-	}
+	} */
 }

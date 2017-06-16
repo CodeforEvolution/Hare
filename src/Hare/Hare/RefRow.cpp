@@ -2,9 +2,9 @@
 
 #include <Debug.h>
 
-BRefRow::BRefRow(entry_ref* entryRef, node_ref* nodeRef, float height)
+BRefRow::BRefRow(entry_ref* entryRef, node_ref* nodeRef)
 	:
-	BRow(height)
+	BRow()
 {
 	PRINT(("BRefRow::BRefRow(entry_ref*,node_ref*,height)\n"));
 

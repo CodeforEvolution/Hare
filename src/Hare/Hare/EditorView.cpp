@@ -19,12 +19,14 @@
 #include <Rect.h>
 #include <TextControl.h>
 
-#include <Santa/CLVRefListItem.h>
-#include "../AudioInfo/GenreList.h"
+#include <ColumnTypes.h>
+
+#include "GenreList.h"
 
 #include "AppDefs.h"
 #include "CommandConstants.h"
 #include "GUIStrings.h"
+#include "RefRow.h"
 
 EditorView::EditorView(BRect frame)
 	:
@@ -341,8 +343,8 @@ EditorView::ListSelectionChanged(BMessage* message)
 
 	free(selectedIndexes);
 
-	BListView* listView;
-	message->FindPointer("source", (void**)&listView);
+	BColumnListView* colListView;
+	message->FindPointer("source", (void**)&colListView);
 
 	type_code index_type;
 	message->GetInfo("index", &index_type, &numSelected);
@@ -380,8 +382,8 @@ EditorView::ListSelectionChanged(BMessage* message)
 		EnableCheckBoxes(true);
 		applyButton->SetEnabled(true);
 
-		CLVRefListItem* item = (CLVRefListItem*)listView->ItemAt(index);
-		SetControlValues(item);
+		BRefRow* row = (BRefRow*)colListView->RowAt(index);
+		SetControlValues(row);
 	} else {
 		artistCheckBox->SetValue(B_CONTROL_ON);
 		albumCheckBox->SetValue(B_CONTROL_ON);
@@ -394,8 +396,8 @@ EditorView::ListSelectionChanged(BMessage* message)
 		EnableCheckBoxes(true);
 		applyButton->SetEnabled(true);
 
-		CLVRefListItem* item = (CLVRefListItem*)listView->ItemAt(index);
-		SetControlValues(item);
+		BRefRow* row = (BRefRow*)colListView->RowAt(index);
+		SetControlValues(row);
 	}
 
 	SetEnabled(artistCheckBox, artistTextControl);
@@ -421,7 +423,7 @@ EditorView::EnableCheckBoxes(bool value)
 }
 
 void
-EditorView::SetControlValues(CLVRefListItem* item)
+EditorView::SetControlValues(BRefRow* row)
 {
 	artistTextControl->SetText("");
 	albumTextControl->SetText("");
@@ -430,21 +432,30 @@ EditorView::SetControlValues(CLVRefListItem* item)
 	commentTextControl->SetText("");
 	trackTextControl->SetText("");
 	genreTextControl->SetText("");
+	
+	BStringField* tmpStringField;
 
-	if (item) {
-		const char* artist = item->GetColumnContentText(ARTIST_COLUMN_INDEX);
+	if (row) {
+		tmpStringField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
+		const char* artist = tmpStringField->String();
 		if (!artist) artist = "";
-		const char* album = item->GetColumnContentText(ALBUM_COLUMN_INDEX);
+		tmpStringField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
+		const char* album = tmpStringField->String();
 		if (!album) album = "";
-		const char* title = item->GetColumnContentText(TITLE_COLUMN_INDEX);
+		tmpStringField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
+		const char* title = tmpStringField->String();
 		if (!title) title = "";
-		const char* year = item->GetColumnContentText(YEAR_COLUMN_INDEX);
+		tmpStringField = (BStringField*)row->GetField(YEAR_COLUMN_INDEX);
+		const char* year = tmpStringField->String();
 		if (!year) year = "";
-		const char* comment = item->GetColumnContentText(COMMENT_COLUMN_INDEX);
+		tmpStringField = (BStringField*)row->GetField(COMMENT_COLUMN_INDEX);
+		const char* comment = tmpStringField->String();
 		if (!comment) comment = "";
-		const char* track = item->GetColumnContentText(TRACK_COLUMN_INDEX);
+		tmpStringField = (BStringField*)row->GetField(TRACK_COLUMN_INDEX);
+		const char* track = tmpStringField->String();
 		if (!track) track = "";
-		const char* genre = item->GetColumnContentText(GENRE_COLUMN_INDEX);
+		tmpStringField = (BStringField*)row->GetField(GENRE_COLUMN_INDEX);
+		const char* genre = tmpStringField->String();
 		if (!genre) genre = "";
 
 		artistTextControl->SetText(artist);

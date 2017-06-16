@@ -4,14 +4,13 @@
 #include <Entry.h>
 #include <Node.h>
 
-#include <private/interface/ColumnListView.h>
+#include <ColumnListView.h>
 
 class BRefRow : public BRow
 {
 public:
 								BRefRow(entry_ref* entryRef,
-									node_ref* nodeRef = 0,
-									float height = 0.0);
+									node_ref* nodeRef = 0);
 	virtual						~BRefRow();
 								
 			entry_ref*			EntryRef();
