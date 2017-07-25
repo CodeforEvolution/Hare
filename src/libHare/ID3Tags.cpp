@@ -6,9 +6,11 @@
 #include <NodeInfo.h>
 #include <String.h>
 
-#include <mpegfile.h>
-#include <oggfile.h>
-#include <vorbisfile.h>
+#include <taglib/aifffile.h>
+#include <taglib/mpegfile.h>
+#include <taglib/oggfile.h>
+#include <taglib/wavfile.h>
+#include <taglib/vorbisfile.h>
 
 #include "GenreList.h"
 #include "ID3Tags.h"
@@ -60,6 +62,26 @@ ID3Tags::ID3Tags(const char* filename)
 					PRINT(("Filetype == VORBIS\n"));
 					file = new TagLib::FileRef(new TagLib::Vorbis::File(filename));
 					fileref_created_ok = true;
+				} else if (string == "audio/wav"
+						   ||	string == "audio/x-wav"
+						   ||	string == "audio/wave"
+						   ||	string == "audio/x-pn-wav") {
+					PRINT(("Filetype == WAV\n"));
+					file = new TagLib::FileRef(new TagLib::RIFF::WAV::File(filename));
+					fileref_created_ok = true;
+				} else if (string == "audio/aiff"
+						   ||	string == "audio/x-aiff"
+						   ||	string == "sound/aiff"
+						   ||	string == "audio/rmf"
+						   ||	string == "audio/x-rmf"
+						   ||	string == "audio/x-pn-aiff"
+						   ||	string == "audio/x-gsm"
+						   ||	string == "audio/mid"
+						   ||	string == "audio/x-midi"
+						   ||	string == "audio/vnd.qcelp") {
+					PRINT(("Filetype == WAV\n"));
+					file = new TagLib::FileRef(new TagLib::RIFF::AIFF::File(filename));
+					fileref_created_ok = true;
 				}
 			}
 
@@ -67,7 +89,7 @@ ID3Tags::ID3Tags(const char* filename)
 
 	if (! fileref_created_ok) {
 		this->file = new TagLib::FileRef(filename);
-		// XXX error checking
+		// XXX TODO: Error Checking
 	}
 
 	if (file == NULL) {
