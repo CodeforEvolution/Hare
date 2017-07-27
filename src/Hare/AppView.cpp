@@ -357,13 +357,13 @@ AppView::InitializeColumn(BRefRow* row)
 {
 	PRINT(("AppView::InitializeColumn(BRefRow*)\n"));
 	
-	BStringField* tmpField;
+//	BStringField* tmpField;
 
 	entry_ref* ref = row->EntryRef();
 	
-	tmpField = (BStringField*)row->GetField(FILE_COLUMN_INDEX);
-	tmpField->SetString(ref->name);
-	row->SetField(tmpField, FILE_COLUMN_INDEX);
+//	tmpField = (BStringField*)row->GetField(FILE_COLUMN_INDEX);
+//	tmpField->SetString(ref->name);
+	row->SetField(new BStringField(ref->name) , FILE_COLUMN_INDEX);
 
 	BVolume volume(ref->device);
 	fs_info fsinfo;
@@ -380,26 +380,29 @@ AppView::InitializeColumn(BRefRow* row)
 			album.Remove(index, album.Length() - index);
 			artist.Trim();
 			album.Trim();
-			tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
-			tmpField->SetString(artist.String());
-			row->SetField(tmpField, ARTIST_COLUMN_INDEX);
-			tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
-			tmpField->SetString(album.String());
-			row->SetField(tmpField, ALBUM_COLUMN_INDEX);
-			tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
-			tmpField->SetString(ref->name);
-			row->SetField(tmpField, TITLE_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
+//			tmpField->SetString(artist.String());
+			row->SetField(new BStringField(artist.String()), ARTIST_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
+//			tmpField->SetString(album.String());
+			row->SetField(new BStringField(album.String()), ALBUM_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
+//			tmpField->SetString(ref->name);
+			row->SetField(new BStringField(ref->name), TITLE_COLUMN_INDEX);
 		} else {
-			tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
-			tmpField->SetString((const char*)0);
-			row->SetField(tmpField, ARTIST_COLUMN_INDEX);
-			tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
-			tmpField->SetString((const char*)0);
-			row->SetField(tmpField, ALBUM_COLUMN_INDEX);
-			tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
-			tmpField->SetString((const char*)0);
-			row->SetField(tmpField, TITLE_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
+//			tmpField->SetString((const char*)0);
+			row->SetField(new BStringField((const char*)0), ARTIST_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
+//			tmpField->SetString((const char*)0);
+			row->SetField(new BStringField((const char*)0), ALBUM_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
+//			tmpField->SetString((const char*)0);
+			row->SetField(new BStringField((const char*)0), TITLE_COLUMN_INDEX);
 		}
+	} else {
+		AlertUser("Hare only accepts audio CDs!");
+		return;
 	}
 
 	if (volume.KnowsAttr()) {
@@ -411,51 +414,51 @@ AppView::InitializeColumn(BRefRow* row)
 
 		const char* artist = attributes.Artist();
 		if (artist) {
-			tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
-			tmpField->SetString(artist);
-			row->SetField(tmpField, ARTIST_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
+//			tmpField->SetString(artist);
+			row->SetField(new BStringField(artist), ARTIST_COLUMN_INDEX);
 		}
 
 		const char* album = attributes.Album();
 		if (album) {
-			tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
-			tmpField->SetString(album);
-			row->SetField(tmpField, ALBUM_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
+//			tmpField->SetString(album);
+			row->SetField(new BStringField(album), ALBUM_COLUMN_INDEX);
 		}
 
 		const char* title = attributes.Title();
 		if (title) {
-			tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
-			tmpField->SetString(title);
-			row->SetField(tmpField, TITLE_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
+//			tmpField->SetString(title);
+			row->SetField(new BStringField(title), TITLE_COLUMN_INDEX);
 		}
 
 		const char* year = attributes.Year();
 		if (year) {
-			tmpField = (BStringField*)row->GetField(YEAR_COLUMN_INDEX);
-			tmpField->SetString(year);
-			row->SetField(tmpField, YEAR_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(YEAR_COLUMN_INDEX);
+//			tmpField->SetString(year);
+			row->SetField(new BStringField(year), YEAR_COLUMN_INDEX);
 		}
 
 		const char* comment = attributes.Comment();
 		if (comment) {
-			tmpField = (BStringField*)row->GetField(COMMENT_COLUMN_INDEX);
-			tmpField->SetString(comment);
-			row->SetField(tmpField, COMMENT_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(COMMENT_COLUMN_INDEX);
+//			tmpField->SetString(comment);
+			row->SetField(new BStringField(comment), COMMENT_COLUMN_INDEX);
 		}
 
 		const char* track = attributes.Track();
 		if (track) {
-			tmpField = (BStringField*)row->GetField(TRACK_COLUMN_INDEX);
-			tmpField->SetString(track);
-			row->SetField(tmpField, TRACK_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(TRACK_COLUMN_INDEX);
+//			tmpField->SetString(track);
+			row->SetField(new BStringField(track), TRACK_COLUMN_INDEX);
 		}
 
 		const char* genre = attributes.Genre();
 		if (genre) {
-			tmpField = (BStringField*)row->GetField(GENRE_COLUMN_INDEX);
-			tmpField->SetString(genre);
-			row->SetField(tmpField, GENRE_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(GENRE_COLUMN_INDEX);
+//			tmpField->SetString(genre);
+			row->SetField(new BStringField(genre), GENRE_COLUMN_INDEX);
 		}
 	}
 
@@ -468,28 +471,35 @@ AppView::SetSaveAsColumn(BRefRow* row)
 	PRINT(("AppView::SetSaveAsColumn(BRefRow*)\n"));
 
 	BStringField* tmpField;
+	const char* artist;
+	const char* album;
+	const char* title;
+	const char* year;
+	const char* comment;
+	const char* track;
+	const char* genre;
 
 	tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
-	const char* artist = tmpField->String();
-	if (!artist) artist = "";
+	if (tmpField != NULL) artist = tmpField->String();
+	if (artist == NULL) artist = "";
 	tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
-	const char* album = tmpField->String();
-	if (!album) album = "";
+	if (tmpField != NULL) album = tmpField->String();
+	if (album == NULL) album = "";
 	tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
-	const char* title = tmpField->String();
-	if (!title) title = "";
+	if (tmpField != NULL) title = tmpField->String();
+	if (title == NULL) title = "";
 	tmpField = (BStringField*)row->GetField(YEAR_COLUMN_INDEX);
-	const char* year = tmpField->String();
-	if (!year) year = "";
+	if (tmpField != NULL) year = tmpField->String();
+	if (year == NULL) year = "";
 	tmpField = (BStringField*)row->GetField(COMMENT_COLUMN_INDEX);
-	const char* comment = tmpField->String();
-	if (!comment) comment = "";
+	if (tmpField != NULL) comment = tmpField->String();
+	if (comment == NULL) comment = "";
 	tmpField = (BStringField*)row->GetField(TRACK_COLUMN_INDEX);
-	const char* track = tmpField->String();
-	if (!track) track = "";
+	if (tmpField != NULL) track = tmpField->String();
+	if (track == NULL) track = "";
 	tmpField = (BStringField*)row->GetField(GENRE_COLUMN_INDEX);
-	const char* genre = tmpField->String();
-	if (!genre) genre = "";
+	if (tmpField != NULL) genre = tmpField->String();
+	if (genre == NULL) genre = "";
 
 	AEEncoder* encoder = settings->Encoder();
 	if (encoder) {
@@ -501,9 +511,9 @@ AppView::SetSaveAsColumn(BRefRow* row)
 		fileNamePattern.ReplaceAll("%c", comment);
 		fileNamePattern.ReplaceAll("%k", track);
 		fileNamePattern.ReplaceAll("%g", genre);
-		tmpField = (BStringField*)row->GetField(SAVE_AS_COLUMN_INDEX);
-		tmpField->SetString(fileNamePattern.String());
-		row->SetField(tmpField, SAVE_AS_COLUMN_INDEX);
+//		tmpField = (BStringField*)row->GetField(SAVE_AS_COLUMN_INDEX);
+//		tmpField->SetString(fileNamePattern.String());
+		row->SetField(new BStringField(fileNamePattern.String()), SAVE_AS_COLUMN_INDEX);
 	}
 }
 
@@ -529,51 +539,51 @@ AppView::ApplyAttributeChanges(BMessage* message)
 		}
 
 		BString tmpString;
-		BStringField* tmpField;
+//		BStringField* tmpField;
 
 		if (message->FindString("artist", &tmpString) == B_OK) {
-			tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
-			tmpField->SetString(tmpString.String());
-			row->SetField(tmpField, ARTIST_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(ARTIST_COLUMN_INDEX);
+//			tmpField->SetString(tmpString.String());
+			row->SetField(new BStringField(tmpString.String()), ARTIST_COLUMN_INDEX);
 		}
 
 		if (message->FindString("album", &tmpString) == B_OK) {
-			tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
-			tmpField->SetString(tmpString.String());
-			row->SetField(tmpField, ALBUM_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(ALBUM_COLUMN_INDEX);
+//			tmpField->SetString(tmpString.String());
+			row->SetField(new BStringField(tmpString.String()), ALBUM_COLUMN_INDEX);
 		}
 
 		if (message->FindString("title", &tmpString) == B_OK) {
-			tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
-			tmpField->SetString(tmpString.String());
-			row->SetField(tmpField, TITLE_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(TITLE_COLUMN_INDEX);
+//			tmpField->SetString(tmpString.String());
+			row->SetField(new BStringField(tmpString.String()), TITLE_COLUMN_INDEX);
 		}
 
 		if (message->FindString("year", &tmpString) == B_OK) {
-			tmpField = (BStringField*)row->GetField(YEAR_COLUMN_INDEX);
-			tmpField->SetString(tmpString.String());
-			row->SetField(tmpField, YEAR_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(YEAR_COLUMN_INDEX);
+//			tmpField->SetString(tmpString.String());
+			row->SetField(new BStringField(tmpString.String()), YEAR_COLUMN_INDEX);
 		}
 
 		if (message->FindString("comment", &tmpString) == B_OK) {
-			tmpField = (BStringField*)row->GetField(COMMENT_COLUMN_INDEX);
-			tmpField->SetString(tmpString.String());
-			row->SetField(tmpField, COMMENT_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(COMMENT_COLUMN_INDEX);
+//			tmpField->SetString(tmpString.String());
+			row->SetField(new BStringField(tmpString.String()), COMMENT_COLUMN_INDEX);
 		}
 
 		if (message->FindString("track", &tmpString) == B_OK) {
 			if (tmpString.CountChars() == 1) {
 				tmpString.Prepend("0");
 			}
-			tmpField = (BStringField*)row->GetField(TRACK_COLUMN_INDEX);
-			tmpField->SetString(tmpString.String());
-			row->SetField(tmpField, TRACK_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(TRACK_COLUMN_INDEX);
+//			tmpField->SetString(tmpString.String());
+			row->SetField(new BStringField(tmpString.String()), TRACK_COLUMN_INDEX);
 		}
 
 		if (message->FindString("genre", &tmpString) == B_OK) {
-			tmpField = (BStringField*)row->GetField(GENRE_COLUMN_INDEX);
-			tmpField->SetString(tmpString.String());
-			row->SetField(tmpField, GENRE_COLUMN_INDEX);
+//			tmpField = (BStringField*)row->GetField(GENRE_COLUMN_INDEX);
+//			tmpField->SetString(tmpString.String());
+			row->SetField(new BStringField(tmpString.String()), GENRE_COLUMN_INDEX);
 		}
 
 		SetSaveAsColumn(row);
@@ -801,9 +811,9 @@ AppView::EncodeThread(void* args)
 	if (view->LockLooper()) {
 		for (int i = 0; i < numRows; i++) {
 			row = (BRefRow*)view->listView->RowAt(i);
-			tmpBitmapField = (BBitmapField*)row->GetField(COMPLETE_COLUMN_INDEX);
-			tmpBitmapField->SetBitmap((BBitmap*)NULL);
-			row->SetField(tmpBitmapField, COMPLETE_COLUMN_INDEX);
+//			tmpBitmapField = (BBitmapField*)row->GetField(COMPLETE_COLUMN_INDEX);
+//			tmpBitmapField->SetBitmap((BBitmap*)NULL);
+			row->SetField(new BBitmapField((BBitmap*)NULL), COMPLETE_COLUMN_INDEX);
 			objList.AddItem(row);
 			view->listView->InvalidateRow(row);
 		}
